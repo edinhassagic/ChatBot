@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import "./Chat.css"
-const ChatFooter = () => {
+const ChatFooter = ({ socket, room, setRoom, user, setUSer, rooms, users }) => {
   const [message, setMessage] = useState('');
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log({ userName: localStorage.getItem('userName'), message });
+
+    socket.emit('send_message', { username, message })
     setMessage('');
   };
+
+
+const   handleTyping = () => {
+
+  socket.emit('typing', {user})
+}
   return (
     <div className="chat__footer">
       <form className="form" onSubmit={handleSendMessage}>
@@ -17,6 +24,7 @@ const ChatFooter = () => {
           className="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleTyping} 
         />
         <button className="sendBtn">SEND</button>
       </form>
