@@ -11,6 +11,7 @@ const ChatPage = ({socket}) => {
   const [users, setUSers] = useState([])
   const [messages, setMessages] = useState([])
   const lastMessageRef = useRef(null);
+  const [typingStatus, setTypingStatus] = useState("")
 
   useEffect(()=>{
       socket.on('getRooms', (data) => {
