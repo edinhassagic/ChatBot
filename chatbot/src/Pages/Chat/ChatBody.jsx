@@ -31,7 +31,6 @@ const ChatBody = ({socket, room, setRoom, user, setUSer, rooms, users, messages,
         </button>
       </header>
 
-      {/*This shows messages sent from you*/}
       <div className="message__container">
         <div className="message__chats">
           <p className="sender__name">You</p>
@@ -40,7 +39,6 @@ const ChatBody = ({socket, room, setRoom, user, setUSer, rooms, users, messages,
           </div>
         </div>
 
-        {/*This shows messages received by you*/}
         <div className="message__chats">
           <p>Other</p>
           <div className="message__recipient">
@@ -48,7 +46,6 @@ const ChatBody = ({socket, room, setRoom, user, setUSer, rooms, users, messages,
           </div>
         </div>
 
-        {/*This is triggered when a user is typing*/}
         <div className="message__status">
           <p>Someone is typing...</p>
         </div>
