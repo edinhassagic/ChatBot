@@ -1,0 +1,38 @@
+{
+  "name": "chat-socket-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/index.js",
+    "dev": "nodemon ./server/index.js",
+    "build-docker-arm64": "docker buildx build --platform linux/arm64 -t ziff-orders-assignment-arm64 . --load",
+    "build-docker-amd64": "docker buildx build --platform linux/amd64 -t ziff-orders-assignment-amd64 . --load",
+    "debug": "node --inspect=0.0.0.0:9220 ./server/index.js"
+  },
+  "imports": {
+    "#data/*": "./server/data/*",
+    "#socketIo/*": "./server/socketIo/*",
+    "#loggers/*": "./server/loggers/*",
+    "#utils/*": "./server/utils/*",
+    "#servers/*": "./server/servers/*",
+    "#server/*": "./server/*",
+    "#root/*": "./*"
+  },
+  "dependencies": {
+    "@elastic/ecs-morgan-format": "^1.5.1",
+    "@elastic/ecs-winston-format": "^1.5.2",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.7.4",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "#data/*": [
+                "./server/data/*"
+            ],
+            "#socketIo/*": [
+                "./server/socketIo/*"
+            ],
+            "#loggers/*": [
+                "./server/loggers/*"
+            ],
+            "#servers/*": [
+                "./server/servers/*"
+            ],
+            "#utils/*": [
+                "./server/utils/*"
+            ],
+            "#server/*": [
+                "./server/*"
+            ],
+            "#root/*": [
+                "./*.js"
+            ],
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}
