@@ -10,7 +10,7 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
 
 
   const joinRoom =() => {
-      socket.emit('join_room', data)
+      socket.emit('join_room', {room})
 
 
       }

@@ -13,19 +13,21 @@ const ChatPage = ({socket}) => {
   const lastMessageRef = useRef(null);
   const [typingStatus, setTypingStatus] = useState("")
 
+
+
   useEffect(()=>{
-      socket.on('getRooms', (data) => {
-        setRooms(data)
 
-      })
+    socket.on('rooms', (data)=> {
 
+      setRooms(data)
 
-
-
-    return () => socket.off('getRooms');
+    })
 
 
   }, [socket])
+
+
+
 
   useEffect(()=> {
     socket.on('typing_response', data => setTypingStatus(data))
