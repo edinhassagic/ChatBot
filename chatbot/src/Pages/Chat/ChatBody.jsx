@@ -19,38 +19,31 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   */
 
 
-    useEffect(() => {
-      socket.on("message", (data) => {
-        setMessages(prevMessages => [...prevMessages, { user: data.user, message: data.message }]);
-      });
-    
-      return () => {
-        socket.off("message");
-      };
-    }, [socket, setMessages]);
-    
+  useEffect(() => {
 
-  // useEffect(()=>{
+    socket.on("message", (data) => {
 
-  //   let currData = {
-  //     room: "",
-  //     messages: []
-  //   }
-  //   socket.on("messages", (data)=>{
-  //       currData = {
-  //         room: data.room,
-  //         messages: data.messages
-  //       }
-    
-  //   })
+      setMessages([...messages, data])
 
-  //   setMessages([...messages, currData])
-  //   console.log("messages:   ",messages)
+      console.log("dosao")
+    })
+    return () => {
+      socket.off("message");
+    };
+  }, [socket, messages])
 
-  //   return () => {
-  //     socket.off("messages");
-  //   };
-  // }, [socket])
+
+
+  useEffect(() => {
+
+    socket.on("messages", (data) => {
+      setMessages(data.messages)
+
+    })
+    return () => {
+      socket.off("messages");
+    };
+  }, [socket, messages])
 
 
 
@@ -69,7 +62,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
     })
 
     console.log("currdata", currData)
-    
+
     const { name, room } = currData;
     console.log("name", "joined room")
     return () => {
