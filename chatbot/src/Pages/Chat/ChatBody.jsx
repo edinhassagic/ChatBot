@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Chat.css"
-const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages, setTypingStatus, lastMessageRef, setMessages }) => {
+const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages, typingStatus, setTypingStatus, lastMessageRef, setMessages }) => {
   const [last10Messages, set10LAstMessages] = useState([])
   const navigate = useNavigate();
   /*
@@ -22,6 +22,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   useEffect(() => {
 
     socket.on("message", (data) => {
+      setTypingStatus("")
 
       setMessages([...messages, data])
 
@@ -71,8 +72,26 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   }, [socket])
 
 
+  useEffect(() => {
+
+    socket.on("typingResponse", data => setTypingStatus(data.status))
+  }, [socket])
+
   const handleLeaveGroup = () => {
+    setMessages([])
+    setRoom("")
+    socket.emit("leaveRoom", {name: room})
+
   };
+
+
+  useEffect(()=> {
+    socket.on('userLeftRoom', (data) => {
+      setMessages([...messages, {user: "", message: `${data.name} left this room`}])
+    })
+
+
+  }, [socket])
 
   return (
     <>
@@ -92,7 +111,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
                   <p>{message.message}</p>
                 </div>
               </>
-            ) : (
+            ) : ( 
               <>
                 <p>{message.user}</p>
                 <div className="message__recipient">
@@ -100,10 +119,19 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
                 </div>
               </>
             )}
+            { message.user ==="" && (
+              <>
+              <p>{message.user}</p>
+              <div className="message__recipient" style={{backgroundColor : "grey"}}>
+                <p>{message.message}</p>
+              </div>
+            </>
+            )}
           </div>
         ))}<div className="message__status">
-          <p>Someone is typing...</p>
+          <p>{typingStatus}</p>
         </div>
+        <div ref={lastMessageRef} />
       </div>
 
 

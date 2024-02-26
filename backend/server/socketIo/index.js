@@ -78,6 +78,11 @@ io.on("connection", async (socket) => {
     io.to(name).emit("message", messageData);
   });
 
+
+  socket.on("typing", data => (
+    io.to(data.room).emit("typingResponse", {status : data.status})
+  ))
+  
   socket.on("leaveRoom", async (data) => {
     const { name } = data;
     if (!name || !rooms[name] || !socket?.user?.name) return;
@@ -86,10 +91,10 @@ io.on("connection", async (socket) => {
     rooms[name].users = rooms[name].users.filter(
       (user) => user !== socket.user.name
     );
+    io.to(name).emit("userLeftRoom", { name: socket.user.name, room: name });
 
     socket.leave(name);
 
-    io.to(name).emit("userLeftRoom", { name: socket.user.name, room: name });
 
     io.emit("users", users);
     io.emit("rooms", rooms);

@@ -40,21 +40,11 @@ const ChatPage = ({ socket }) => {
  
 
 
-/*
-  useEffect(() => {
-    socket.on('typing_response', data => setTypingStatus(data))
 
-    return () => socket.off('typing_response')
-  }, [socket])
-
-
-  useEffect(() => {
-    socket.on("messageResponse", data => setMessages([...messages, data]))
-  }, [socket, messages])
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);*/
+  }, [messages]);
 
   return (
     <div className="chat">
@@ -64,8 +54,8 @@ const ChatPage = ({ socket }) => {
     
       <ChatBar socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setUser={setUser}/>
       <div className="chat__main">
-        <ChatBody socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} setMessages= {setMessages} />
-        <ChatFooter socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setMessages={setMessages} messages={messages} />
+        <ChatBody socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} messages={messages} typingStatus={typingStatus} setTypingStatus={setTypingStatus} lastMessageRef={lastMessageRef} setMessages= {setMessages} />
+        <ChatFooter socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setMessages={setMessages} messages={messages} setTypingStatus={setTypingStatus}/>
       </div>
     </div>
   );
