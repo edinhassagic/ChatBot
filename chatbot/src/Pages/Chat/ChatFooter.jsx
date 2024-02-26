@@ -7,7 +7,6 @@ const ChatFooter = ({ socket, room, setRoom, user, setUSer, rooms, users, setMes
     e.preventDefault();
 
     socket.emit('message', { name: room, message: message})
-    setMessages([...messages, {user: user, message: message}])
     setMessage('');
   };
 
