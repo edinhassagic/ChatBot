@@ -88,8 +88,9 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   useEffect(()=> {
     socket.on('userLeftRoom', (data) => {
       setMessages([...messages, {user: "", message: `${data.name} left this room`}])
+      console.log("u svim korisnicima sam primio")
     })
-
+    
 
   }, [socket])
 
