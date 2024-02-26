@@ -33,7 +33,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
 
     })
 
-    setMessages([...messages, { user: currData.user, message: currData.message }])
+    setMessages([...messages,currData])
     console.log(messages, "messages")
 
     return () => {
@@ -41,6 +41,8 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
     };
 
   }, [socket])
+
+  
 
   useEffect(()=>{
 
@@ -56,7 +58,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
     
     })
 
-    setMessages(currData)
+    setMessages([...messages, currData])
     console.log("messages:   ",messages)
 
     return () => {
@@ -79,16 +81,15 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
         room: data.room
       }
     })
+
+    console.log("currdata", currData)
     
     const { name, room } = currData;
-    console.log(name, "joined room")
+    console.log("name", "joined room")
     return () => {
       socket.off("userJoinedRoom");
     };
   }, [socket])
-
-
-
 
 
   const handleLeaveGroup = () => {
@@ -105,7 +106,7 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
       <div className="message__container">
         {(messages.length > 0) && messages.map((message, index) => (
           <div className="message__chats" key={index}>
-            {message.user === user ? (
+            {message.user === localStorage.getItem("user") ? (
               <>
                 <p className="sender__name">{message.user}</p>
                 <div className="message__sender">

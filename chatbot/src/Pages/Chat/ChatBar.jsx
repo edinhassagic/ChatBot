@@ -9,7 +9,13 @@ const ChatBar = ({ socket, room, setRoom, user, setUsers, rooms, users , setUser
   }, [users])
 
 
+  useEffect(()=>{
+    if(localStorage.getItem("user"))
+    socket.emit('login', { name: localStorage.getItem("user") });
+  }, [])
+
   const login = () => {
+    localStorage.setItem("user", user)
     socket.emit('login', { name: user });
 
 

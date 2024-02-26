@@ -37,7 +37,7 @@ const ChatPage = ({ socket }) => {
 
   }, [socket])
 
-
+ 
 
 
 /*
@@ -65,7 +65,7 @@ const ChatPage = ({ socket }) => {
       <ChatBar socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setUser={setUser}/>
       <div className="chat__main">
         <ChatBody socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} setMessages= {setMessages} />
-        <ChatFooter socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} />
+        <ChatFooter socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setMessages={setMessages} messages={messages} />
       </div>
     </div>
   );

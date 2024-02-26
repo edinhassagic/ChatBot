@@ -12,10 +12,11 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
   }
 
   const createnewRoom=()=>{
-    console.log("created new room")
     socket.emit('createRoom', {name : newRoom})
 
   }
+
+  console.log(rooms)
   
 
   return (
@@ -27,7 +28,7 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
           <ul>
               {/* Map over the rooms array and render each room */}
               {Object.keys(rooms).map(roomName => (
-                <li key={roomName}>{rooms[roomName].name}</li>
+                <li key={roomName}>{roomName}</li>
               ))}
             </ul>
           </div>
