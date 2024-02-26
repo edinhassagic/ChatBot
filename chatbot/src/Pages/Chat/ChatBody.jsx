@@ -19,52 +19,38 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   */
 
 
-  useEffect(() => {
-    let currData = {
-      user: "",
-      message: ""
-    }
-    socket.on("message", (data) => {
-      currData = {
-        user: data.user,
-        message: data.message
-      }
-
-
-    })
-
-    setMessages([...messages,currData])
-    console.log(messages, "messages")
-
-    return () => {
-      socket.off("message");
-    };
-
-  }, [socket])
-
-  
-
-  useEffect(()=>{
-
-    let currData = {
-      room: "",
-      messages: []
-    }
-    socket.on("messages", (data)=>{
-        currData = {
-          room: data.room,
-          messages: data.messages
-        }
+    useEffect(() => {
+      socket.on("message", (data) => {
+        setMessages(prevMessages => [...prevMessages, { user: data.user, message: data.message }]);
+      });
     
-    })
+      return () => {
+        socket.off("message");
+      };
+    }, [socket, setMessages]);
+    
 
-    setMessages([...messages, currData])
-    console.log("messages:   ",messages)
+  // useEffect(()=>{
 
-    return () => {
-      socket.off("messages");
-    };
-  }, [socket])
+  //   let currData = {
+  //     room: "",
+  //     messages: []
+  //   }
+  //   socket.on("messages", (data)=>{
+  //       currData = {
+  //         room: data.room,
+  //         messages: data.messages
+  //       }
+    
+  //   })
+
+  //   setMessages([...messages, currData])
+  //   console.log("messages:   ",messages)
+
+  //   return () => {
+  //     socket.off("messages");
+  //   };
+  // }, [socket])
 
 
 
