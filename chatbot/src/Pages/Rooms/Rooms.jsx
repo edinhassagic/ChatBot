@@ -16,7 +16,6 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
 
   }
 
-  console.log(rooms)
   
 
   return (
@@ -26,20 +25,19 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
           <h1>{`Select Room`}</h1>
           <div className={styles.roomList}>
           <ul>
-              {/* Map over the rooms array and render each room */}
               {Object.keys(rooms).map(roomName => (
                 <li key={roomName}>{roomName}</li>
               ))}
             </ul>
           </div>
 
-          <p>
+          { room && <p>
             Current room :{" "}
             <span>
-              <b>Developers</b>
+              <b>{room}</b>
             </span>
-          </p>
-          <input onChange={(e)=>{setRoom(e.target.value)}}></input>
+          </p>}
+          <input className={styles.input} onChange={(e)=>{setRoom(e.target.value)}}></input>
           <button className="btn btn-secondary"  onClick={joinRoom} >Join Room</button>
         </div>
       </div>

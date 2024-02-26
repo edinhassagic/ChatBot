@@ -13,7 +13,6 @@ io.use(async (socket, next) => {
 
 io.on("connection", async (socket) => {
   logger.info(`User connected`);
-  console.log(rooms, "rooms", users, "users")
   socket.on("login", async (data) => {
 
     const { name } = data;
@@ -47,7 +46,7 @@ io.on("connection", async (socket) => {
 
     logger.info(`User joined room ${name}`);
     rooms[name].users.push(socket.user.name);
-    io.to(name).emit("userJoinedRoom", { name: socket.user.name, room: name });
+    socket.to(name).emit("userJoinedRoom", { name: socket.user.name, room: name });
     socket.join(name);
 
     socket.emit("messages", {

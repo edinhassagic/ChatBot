@@ -12,7 +12,7 @@ const ChatFooter = ({ socket, room, setRoom, user, setUSer, rooms, users, setMes
 
   const handleTypingResponse = (e) => {
 
-    socket.emit("typing",{room: room, status: `${localStorage.getItem("user")} is typing`})
+    socket.emit("typing",{room: room, status: `${user} is typing`})
 
 
   }
