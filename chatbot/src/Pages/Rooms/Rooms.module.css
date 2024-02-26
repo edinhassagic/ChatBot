@@ -1,5 +1,4 @@
 .formContainer {
-  width: 300px;
   margin: 0 auto 0 auto;
   padding: 22px;
   background: lightblue;
@@ -15,7 +14,6 @@
 }
 
 .roomList {
-  height: 200px;
   overflow-y: scroll;
 }
 

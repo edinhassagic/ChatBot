@@ -14,55 +14,30 @@ const ChatPage = ({ socket }) => {
   const [typingStatus, setTypingStatus] = useState("");
 
   useEffect(() => {
-    socket.on("rooms", (data) => {
-      setRooms(data);
-    });
-    console.log(rooms, "room");
-  }, [socket]);
+    socket.on('rooms', (data) => {
+      setRooms(data)
+    })
+  }, [socket, rooms])
 
   useEffect(() => {
-    socket.on("users", (data) => {
+    socket.on('users', (data) => {
       setUsers(data);
-    });
-  }, [socket]);
+    })
+  }, [socket, users])
+
+
+
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <div className="chat">
-      <ChatBar
-        socket={socket}
-        room={room}
-        setRoom={setRoom}
-        user={user}
-        setUsers={setUsers}
-        rooms={rooms}
-        users={users}
-        setUser={setUser}
-      />
+      <ChatBar socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setUser={setUser} />
       <div className="chat__main">
-        <ChatBody
-          socket={socket}
-          room={room}
-          setRoom={setRoom}
-          user={user}
-          setUsers={setUsers}
-          rooms={rooms}
-          users={users}
-          messages={messages}
-          typingStatus={typingStatus}
-          lastMessageRef={lastMessageRef}
-          setMessages={setMessages}
-        />
-        <ChatFooter
-          socket={socket}
-          room={room}
-          setRoom={setRoom}
-          user={user}
-          setUsers={setUsers}
-          rooms={rooms}
-          users={users}
-          setMessages={setMessages}
-          messages={messages}
-        />
+        <ChatBody socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} messages={messages} typingStatus={typingStatus} setTypingStatus={setTypingStatus} lastMessageRef={lastMessageRef} setMessages={setMessages} />
+        <ChatFooter socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} setMessages={setMessages} messages={messages} setTypingStatus={setTypingStatus} />
       </div>
     </div>
   );
