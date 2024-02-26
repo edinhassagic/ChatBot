@@ -3,21 +3,17 @@ import styles from "./Rooms.module.css";
 
 const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
   const [newRoom, setNewRoom] = useState("");
-  
-
-
-
-
 
   const joinRoom =() => {
-      socket.emit('join_room', {room})
 
+    socket.emit("joinRoom", {name: room})
+    
 
-      }
+  }
 
   const createnewRoom=()=>{
-
-    socket.emit('create_room', data)
+    console.log("created new room")
+    socket.emit('createRoom', {name : newRoom})
 
   }
   
@@ -28,25 +24,11 @@ const Rooms = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
         <div className={styles.formContainer}>
           <h1>{`Select Room`}</h1>
           <div className={styles.roomList}>
-            <ul>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
-              <li>Developers</li>
-              <li>Gamers</li>
-              <li>Designers</li>
+          <ul>
+              {/* Map over the rooms array and render each room */}
+              {Object.keys(rooms).map(roomName => (
+                <li key={roomName}>{rooms[roomName].name}</li>
+              ))}
             </ul>
           </div>
 

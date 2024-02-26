@@ -5,7 +5,7 @@ import MainRoutes from "./Routes";
 import SocketIO from "socket.io-client"
 
 
-const socket = SocketIO.connect("http://localhost:3000")
+const socket = SocketIO.connect("localhost:3000", { transports: ["websocket"] })
 
 function App() {
   return (

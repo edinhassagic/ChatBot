@@ -6,7 +6,7 @@ const { ecsFormat } = require('@elastic/ecs-winston-format');
 const packageJson = require('#root/package.json');
 
 const logger = winston.createLogger({
-    format: ecsFormat({ serviceName: packageJson.name }),
+    // format: ecsFormat({ serviceName: packageJson.name }),
     transports: [
         new winston.transports.Console()
     ]

@@ -15,21 +15,23 @@ io.on("connection", async (socket) => {
   logger.info(`User connected`);
 
   socket.on("login", async (data) => {
-    const { name } = data;
-    if (!name || users[name]) return;
 
+    const { name } = data;
+    if (!name || !!users[name]) return;
     logger.info(`User ${name} logged in`);
     socket.user = { name };
     users[name] = { name };
-
     io.emit("users", users);
     io.emit("rooms", rooms);
   });
 
   socket.on("createRoom", async (data) => {
+    console.log("create room")
     const { name } = data;
-    if (!name || rooms[name] || !socket?.user?.name) return;
+    console.log(rooms, "rooms")
 
+    if (!name || rooms[name] || !socket?.user?.name) return;
+    
     logger.info(`User created room ${name}`);
     rooms[name] = { name, users: [] };
     messages[name] = [];
@@ -40,11 +42,15 @@ io.on("connection", async (socket) => {
 
   socket.on("joinRoom", async (data) => {
     const { name } = data;
+
+    console.log(name, rooms[name], messages[name])
+    console.log(rooms)
     if (!name || !rooms[name] || !messages[name] || !socket?.user?.name) return;
+    console.log("usao u joinroom". socket.user.name)
 
     logger.info(`User joined room ${name}`);
     rooms[name].users.push(socket.user.name);
-
+    console.log(name)
     io.to(name).emit("userJoinedRoom", { name: socket.user.name, room: name });
     socket.join(name);
 
@@ -59,7 +65,7 @@ io.on("connection", async (socket) => {
 
   socket.on("message", async (data) => {
     const { name, message } = data;
-
+    console.log(message)
     if (
       !name ||
       !message ||

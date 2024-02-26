@@ -3,22 +3,27 @@ import "./Chat.css";
 
 import Rooms from "../Rooms/Rooms";
 
-const ChatBar = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
-  useEffect(()=>{
-    socket.on('users', (data)=>{
-
-      
-      
-    })
-    return () => socket.off('users');
-
-  }, [socket])
+const ChatBar = ({ socket, room, setRoom, user, setUsers, rooms, users , setUser}) => {
+  useEffect(() => {
+    console.log(users)
+  }, [users])
 
 
+  const login = () => {
+    socket.emit('login', { name: user });
+
+
+  }
 
   return (
     <div className="chat__sidebar">
+
+      <div className='login'>
+        <input type='text' placeholder="Enter your username" onChange={(e) => { setUser(e.target.value) }} ></input>
+        <button onClick={login}>Login</button>
+      </div>
       <h2>Open Chat</h2>
+      {user}
 
       <div>
         <h4 className="chat__header">ACTIVE USERS</h4>
@@ -29,7 +34,7 @@ const ChatBar = ({socket, room, setRoom, user, setUSer, rooms, users}) => {
           <p>User 4</p>
         </div>
       </div>
-    <Rooms/>
+      <Rooms socket={socket} room={room} setRoom={setRoom} user={user} setUsers={setUsers} rooms={rooms} users={users} />
     </div>
   );
 };
