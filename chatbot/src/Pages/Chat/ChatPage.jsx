@@ -24,7 +24,7 @@ const ChatPage = ({ socket }) => {
     })
     console.log(rooms, "room")
 
-  }, [socket])
+  }, [socket, rooms])
 
   useEffect(() => {
 
@@ -35,7 +35,7 @@ const ChatPage = ({ socket }) => {
     })
 
 
-  }, [socket])
+  }, [socket, users])
 
  
 

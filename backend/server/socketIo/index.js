@@ -91,7 +91,7 @@ io.on("connection", async (socket) => {
     rooms[name].users = rooms[name].users.filter(
       (user) => user !== socket.user.name
     );
-    io.to(name).emit("userLeftRoom", { name: socket.user.name, room: name });
+    socket.to(name).emit("userLeftRoom", { name: socket.user.name, room: name });
 
     socket.leave(name);
 

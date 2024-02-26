@@ -18,6 +18,8 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
   
   */
 
+    const [alertMessage,setAlertMessage] = useState("")
+
 
   useEffect(() => {
 
@@ -79,20 +81,36 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
 
   const handleLeaveGroup = () => {
     setMessages([])
-    setRoom("")
     socket.emit("leaveRoom", {name: room})
 
   };
 
+  const handleDeleteGroup =() => {
+    socket.emit("deleteRoom", {name: room})
+
+  }
+
+
 
   useEffect(()=> {
     socket.on('userLeftRoom', (data) => {
+      
+      console.log(messages + "messages")
       setMessages([...messages, {user: "", message: `${data.name} left this room`}])
       console.log("u svim korisnicima sam primio")
     })
     
 
-  }, [socket])
+  }, [socket, messages]) 
+  
+  useEffect(()=> {
+    socket.on("roomDeleted", data => {
+      setAlertMessage({user:"", message: "This room is deleted"})
+
+    })
+
+
+  }, [socket, rooms])
 
   return (
     <>
@@ -100,19 +118,21 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
         <p>Room Developers</p>
         <button className="leaveChat__btn" onClick={handleLeaveGroup}>
           LEAVE GROUP
+        </button><button className="leaveChat__btn" onClick={handleDeleteGroup}>
+          DELETE GROUP
         </button>
       </header>
       <div className="message__container">
         {(messages.length > 0) && messages.map((message, index) => (
           <div className="message__chats" key={index}>
-            {message.user === localStorage.getItem("user") ? (
+            {(message.user === localStorage.getItem("user")) && (
               <>
                 <p className="sender__name">{message.user}</p>
                 <div className="message__sender">
                   <p>{message.message}</p>
                 </div>
               </>
-            ) : ( 
+            ) }{message.user != "" && message.user != localStorage.getItem("user") && ( 
               <>
                 <p>{message.user}</p>
                 <div className="message__recipient">
@@ -128,6 +148,10 @@ const ChatBody = ({ socket, room, setRoom, user, setUSer, rooms, users, messages
               </div>
             </>
             )}
+            <div className="message__recipient" style={{backgroundColor : "grey"}}>
+                <p>{alertMessage.message}</p>
+                <button onClick={setMessages([])}> OK </button>
+              </div>
           </div>
         ))}<div className="message__status">
           <p>{typingStatus}</p>
