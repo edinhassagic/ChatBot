@@ -47,7 +47,7 @@ io.on("connection", async (socket) => {
 
     logger.info(`User joined room ${name}`);
     rooms[name].users.push(socket.user.name);
-    io.broadcast.to(name).emit("userJoinedRoom", { name: socket.user.name, room: name });
+    io.to(name).emit("userJoinedRoom", { name: socket.user.name, room: name });
     socket.join(name);
 
     socket.emit("messages", {
